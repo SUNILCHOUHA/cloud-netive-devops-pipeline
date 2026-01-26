@@ -36,7 +36,7 @@ jobs:
 
   #Job 2 Verify Cluster Creation issue
   build-artifact:
-    if: github.event_name == "workflow_dispatch"
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code 
