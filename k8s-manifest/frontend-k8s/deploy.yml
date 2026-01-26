@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: frontend-deploy 
+  namespace: ci-cd
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec: 
+      containers:
+      - name: frontend
+        image: sunilchouha/notes-app-frontend:IMAGE_TAG
+        ports:
+        - containerPort: 5000
