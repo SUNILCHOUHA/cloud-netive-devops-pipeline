@@ -39,7 +39,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    env: dev 
+    environment: dev 
 
     steps:
       - name: Checkout Code 
@@ -85,7 +85,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    env: dev 
+    environment: dev 
     steps:
       - name: Checkout code 
         uses: actions/checkout@v4 

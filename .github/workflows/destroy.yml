@@ -5,7 +5,7 @@ on:
 jobs:
   destroy:
     runs-on: ubuntu-latest
-    env: destroy
+    environment: destroy
     permissions:
       id-token: write
       contents: read
