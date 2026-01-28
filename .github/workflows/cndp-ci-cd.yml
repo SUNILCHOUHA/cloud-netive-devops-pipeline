@@ -42,7 +42,6 @@ jobs:
       id-token: write
       contents: read
     environment: dev 
-    # if: github.event_name == 'workflow-dispatch'
 
     steps:
       - name: Checkout Code 
@@ -86,11 +85,11 @@ jobs:
     needs: build-artifact
     runs-on: ubuntu-latest
     environment: cluster 
-    if: github.event_name == 'workflow-dispatch'
     permissions:
       id-token: write
       contents: read
     environment: dev 
+    
     steps:
       - name: Checkout code 
         uses: actions/checkout@v4 
