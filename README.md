@@ -71,4 +71,71 @@ The setup follows **production-style DevOps practices**, including Infrastructur
 ---
 
 ## 📁 Repository Structure
+.
+├── terraform/
+│ ├── eks/
+│ ├── vpc/
+│ ├── iam/
+│ └── backend.tf
+├── k8s/
+│ ├── frontend/
+│ ├── backend/
+│ └── database/
+├── .github/
+│ └── workflows/
+│ ├── terraform.yml
+│ └── docker.yml
+├── 3-tier-app/
+│ ├── frontend/
+│ ├── backend/
+│ └── database/
+└── README.md
 
+
+---
+
+## 🔐 Security & Best Practices
+
+- Remote Terraform backend using **S3 + DynamoDB**
+- GitHub Actions authentication via **AWS OIDC** (no static credentials)
+- Kubernetes **NetworkPolicies** for pod-to-pod security
+- Environment separation (dev / staging / prod ready)
+- Image versioning using **Git commit SHA**
+
+---
+
+## 🌐 Application Access
+
+Once deployed, the application is accessible via:
+
+---
+
+## 🎯 Key Learning Outcomes
+
+- End-to-end DevOps CI/CD pipeline design
+- Production-style Terraform workflows
+- Kubernetes application deployment on AWS EKS
+- Secure cloud authentication using OIDC
+- Containerized microservices deployment
+
+---
+
+## 📌 Future Enhancements
+
+- Add monitoring with Prometheus & Grafana
+- Implement Helm charts
+- Add Argo CD for GitOps-based deployment
+- Introduce auto-scaling (HPA)
+
+---
+
+## 👤 Author
+
+**Sunil Chouhan**  
+Aspiring DevOps Engineer  
+GitHub: https://github.com/SUNILCHOUHA  
+LinkedIn: https://www.linkedin.com/in/sunil-chouhan-07a45b36b/
+
+---
+
+⭐ If you find this project helpful, consider giving it a star!
