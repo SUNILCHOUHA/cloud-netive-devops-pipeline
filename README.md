@@ -1,100 +1,143 @@
-🚀 Cloud-Native DevOps Pipeline (GitOps on AWS EKS)
+# Cloud-Native DevOps CI/CD Pipeline (AWS EKS)
 
-This project demonstrates a production-grade Cloud-Native DevOps pipeline that provisions infrastructure on AWS and deploys containerized workloads to Amazon EKS using a GitOps-driven CI/CD workflow.
+This project demonstrates an **end-to-end Cloud-Native DevOps pipeline** that provisions infrastructure on AWS and deploys a **3-tier application** to a Kubernetes (EKS) cluster using **Terraform, Docker, and GitHub Actions**.
 
-The architecture follows modern DevOps principles including:
-Infrastructure as Code (IaC)
-Secure CI pipeline
-GitOps-based deployment
-Automated image updates
-Deployment hooks
-RBAC-based access control
-Drift detection & self-healing
+The setup follows **production-style DevOps practices**, including Infrastructure as Code (IaC), CI/CD automation, containerization, and Kubernetes-based application deployment.
 
-🏗️ Architecture Overview
-🔁 End-to-End Flow
-Developer pushes code to GitHub.
-GitHub Actions builds and pushes Docker images.
-Images are stored in Docker Hub.
-Argo CD Image Updater detects new image tags.
-Git repository is updated automatically.
-Argo CD syncs changes to Amazon EKS.
-PreSync hooks validate before deployment.
-Kubernetes deploys workloads.
-Drift detection ensures cluster state matches Git.
+---
 
-🛠️ Tech Stack
-☁️ Infrastructure
-AWS (EKS, VPC, IAM, EC2)
-Terraform
-S3 + DynamoDB (remote backend)
+## 🚀 Project Architecture Overview
 
-🔄 CI/CD & GitOps
-GitHub Actions
-OIDC Authentication
-Docker
-Docker Hub
-Argo CD
-Argo CD Image Updater
+**Workflow Summary:**
+1. Developer pushes code from the local machine to GitHub.
+2. GitHub Actions triggers CI/CD pipelines.
+3. Terraform provisions AWS infrastructure and EKS cluster.
+4. Docker images are built and pushed to Docker Hub.
+5. Kubernetes pulls images and deploys the 3-tier application on EKS.
+6. Users access the application via Ingress.
 
-☸️ Kubernetes
-Deployments
-Services
-Ingress
-HPA
-Network Policies
-Stateful workloads (optional)
+---
 
-🔐 GitOps & Security Features
-✅ GitOps Deployment Model
-No direct kubectl apply from CI
-Argo CD manages deployment lifecycle
+## 🛠️ Tech Stack
 
-✅ Automated Image Updates
-Image Updater commits new versions to Git
-Fully automated deployment cycle
+### Cloud & Infrastructure
+- **AWS**: EKS, EC2, VPC, IAM, S3, DynamoDB
+- **Terraform**: Infrastructure provisioning and state management
 
-✅ Deployment Hooks
-PreSync jobs for validation/migration
-Controlled rollout strategy
+### DevOps & CI/CD
+- **GitHub Actions** (CI/CD)
+- **OIDC Authentication** (AWS & GitHub Actions)
+- **Docker** (containerization)
+- **Docker Hub** (image registry)
 
-✅ RBAC
-Role-based access control
-Read-only users
-Restricted sync/delete permissions
+### Container Orchestration
+- **Kubernetes (EKS)**
+- Deployments, Services, Ingress
+- Network Policies for secure pod communication
 
-✅ Drift Detection
-Auto self-heal enabled
-Manual changes automatically reverted
+---
 
-📁 Repository Structure
-cloud-native-devops-pipeline/
-│
+## 📦 Application Architecture (3-Tier)
+
+### Frontend
+- Kubernetes Deployment
+- Kubernetes Service
+- Exposed via Ingress
+
+### Backend
+- Kubernetes Deployment
+- Internal Service (ClusterIP)
+
+### Database
+- Kubernetes Deployment
+- Internal Service (ClusterIP only)
+
+---
+
+## 🔁 CI/CD Pipeline Flow (GitHub Actions)
+
+**Triggers**
+- `push`
+- `pull_request`
+- `workflow_dispatch`
+
+**Pipeline Steps**
+- Authenticate to AWS using OIDC
+- Terraform `init`, `plan`, and `apply`
+- Build Docker images
+- Push images to Docker Hub
+- Deploy Kubernetes manifests using `kubectl apply`
+
+---
+
+## 📁 Repository Structure
+.
 ├── terraform/
-│   ├── vpc/
-│   ├── eks/
-│   └── backend.tf
-│
-├── app-source/
-│   ├── Dockerfile
-│   └── .github/workflows/
-│
-├── gitops-manifests/
-│   ├── dev/
-│   ├── stg/
-│   ├── prod/
-│   └── hooks/
-│
+│ ├── eks/
+│ ├── vpc/
+│ ├── iam/
+│ └── backend.tf
+├── k8s/
+│ ├── frontend/
+│ ├── backend/
+│ └── database/
+├── .github/
+│ └── workflows/
+│ ├── terraform.yml
+│ └── docker.yml
+├── 3-tier-app/
+│ ├── frontend/
+│ ├── backend/
+│ └── database/
 └── README.md
 
 
+---
 
-🎯 Key Learning Outcomes
-Designing GitOps-based CI/CD pipelines
-Secure AWS authentication using OIDC
-Infrastructure provisioning with Terraform
-Kubernetes deployment automation with Argo CD
-Automated container image version management
-Deployment lifecycle control using hooks
-Role-based access enforcement
-Drift detection & cluster self-healing
+## 🔐 Security & Best Practices
+
+- Remote Terraform backend using **S3 + DynamoDB**
+- GitHub Actions authentication via **AWS OIDC** (no static credentials)
+- Kubernetes **NetworkPolicies** for pod-to-pod security
+- Environment separation (dev / staging / prod ready)
+- Image versioning using **Git commit SHA**
+
+---
+
+## 🌐 Application Access
+
+Once deployed, the application is accessible via:
+
+---
+
+## 🎯 Key Learning Outcomes
+
+- End-to-end DevOps CI/CD pipeline design
+- Production-style Terraform workflows
+- Kubernetes application deployment on AWS EKS
+- Secure cloud authentication using OIDC
+- Containerized microservices deployment
+
+---
+
+## 📌 Future Enhancements
+
+- Add monitoring with Prometheus & Grafana
+- Implement Helm charts
+- Add Argo CD for GitOps-based deployment
+- Introduce auto-scaling (HPA)
+
+---
+
+## 👤 Author
+
+**Sunil Chouhan**  
+Aspiring DevOps Engineer  
+GitHub: https://github.com/SUNILCHOUHA  
+LinkedIn: https://www.linkedin.com/in/sunil-chouhan-07a45b36b/
+
+---
+
+⭐ If you find this project helpful, consider giving it a star!
+
+replace this to new version
