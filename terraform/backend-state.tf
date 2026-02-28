@@ -11,11 +11,11 @@ terraform {
   
 
   backend "s3" {
-    bucket         = "backend-state-eks"
+    bucket         = "backend-eks-state-cicd"
     key            = "terraform/terraform.tfstate"
-    region         = "us-east-1"
+    region         = "ap-south-1"
     use_lockfile = true
-    dynamodb_table = "State-lock"
+    # dynamodb_table = "State-lock"
     encrypt        = true
   }
 }

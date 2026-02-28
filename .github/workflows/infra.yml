@@ -1,0 +1,79 @@
+name: Provision Infra
+on:
+  workflow_dispatch:
+
+jobs:
+  plan-infra:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      
+    steps:
+      - name: Checkout Code 
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::364478544576:role/100DaysOfDevOps
+          aws-region: ap-south-1
+
+      - name: Terraform Setup
+        uses: hashicorp/setup-terraform@v3 
+      
+      - name: Terraform Initialize
+        working-directory: terraform
+        run: |
+          terraform init
+          terraform validate
+        
+      - name: Terraform Plan
+        working-directory: terraform
+        run: |
+          terraform plan -out=tfplan
+
+      - name: Artifact Plan
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan
+          path: terraform/tfplan
+
+  apply-infra:
+    needs: plan-infra
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout code 
+        uses: actions/checkout@v4 
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::364478544576:role/100DaysOfDevOps
+          aws-region: ap-south-1
+
+      - name: Terraform Setup
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v4 
+        with:
+          name: tfplan
+          path: terraform/
+
+      - name: Terraform Initialize
+        working-directory: terraform
+        run: |
+          terraform init
+          terraform validate 
+        
+      - name: Terraform Apply
+        working-directory: terraform
+        run: terraform apply -auto-approve tfplan
+
+
+
+  

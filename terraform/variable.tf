@@ -1,11 +1,11 @@
 variable "aws_region" {
-  default = "us-west-1"
+  default = "ap-south-1"
 }
 
 variable "cluster_name" {
-  default = "DevOps-EKS-Cluster"
+  default = "gitops-eks-cluster"
 }
 
-# variable "env" {
-#   default = dev 
-# }
+variable "repository_name" {
+  default = "gitops-app"
+}
