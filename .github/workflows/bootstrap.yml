@@ -1,0 +1,8 @@
+# name: ArgoCD Auto-Deployment
+# on:
+#   push:
+
+# jobs:
+#   setup-argocd:
+#     runs-on: ubuntu-latest
+    

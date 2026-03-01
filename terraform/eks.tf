@@ -94,12 +94,12 @@ resource "aws_eks_node_group" "nodes" {
   ]
 
   scaling_config {
-    desired_size = 1
-    max_size     = 1
+    desired_size = 2
+    max_size     = 3
     min_size     = 1
   }
 
-  instance_types = ["t3.micro"]  # Free tier safe
+  instance_types = ["t3.small"]  # Free tier safe
 
   capacity_type = "ON_DEMAND"
 
