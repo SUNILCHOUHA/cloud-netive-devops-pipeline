@@ -7,5 +7,5 @@ variable "cluster_name" {
 }
 
 variable "repository_name" {
-  default = "gitops-app"
+  default = "argo-app"
 }

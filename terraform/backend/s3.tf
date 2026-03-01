@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "state_bucket" {
-  bucket = "backend-state-eks"
+  bucket = "backend-eks-state-cicd"
   
   tags = {
     Name = "Backend"
