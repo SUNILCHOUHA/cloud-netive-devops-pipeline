@@ -5,7 +5,7 @@ on:
 
 jobs:
   argocd:
-    runs-on: ubuntu-labels
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -13,4 +13,4 @@ jobs:
       - name: Apply ArgoCD Application 
         working-directory: argocd 
         run: kubectl apply -f application.yml
-        
+
