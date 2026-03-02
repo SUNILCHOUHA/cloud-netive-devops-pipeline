@@ -1,0 +1,7 @@
+resources:
+  - deployment.yaml
+  - service.yaml
+
+images:
+  - name: 364478544576.dkr.ecr.ap-south-1.amazonaws.com/argo-app
+    newTag: 0fa3d5454634cb273da4ba1174a8980a21549b81

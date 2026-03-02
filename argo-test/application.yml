@@ -11,10 +11,12 @@ metadata:
 
 spec:
   project: default
+  spec:
   source:
     repoURL: https://github.com/SUNILCHOUHA/cloud-netive-devops-pipeline.git
     targetRevision: main
     path: gitops-repo
+    kustomize: {}
   destination:
     server: https://kubernetes.default.svc
     namespace: default
