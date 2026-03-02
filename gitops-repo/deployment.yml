@@ -19,12 +19,12 @@ spec:
           image: 364478544576.dkr.ecr.ap-south-1.amazonaws.com/argo-app:0fa3d5454634cb273da4ba1174a8980a21549b81
           ports:
             - containerPort: 5000
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 5000
-            initialDelaySeconds: 5
-            periodSeconds: 10
+          # readinessProbe:
+          #   httpGet:
+          #     path: /health
+          #     port: 5000
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 10
 
 
 
