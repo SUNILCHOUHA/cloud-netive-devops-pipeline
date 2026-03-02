@@ -1,8 +1,16 @@
-# name: ArgoCD Auto-Deployment
-# on:
-#   push:
+name: Bootstrap ArgoCD 
 
-# jobs:
-#   setup-argocd:
-#     runs-on: ubuntu-latest
-    
+on:
+  workflow_dispatch:
+
+jobs:
+  argocd:
+    runs-on: ubuntu-labels
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: Apply ArgoCD Application 
+        working-directory: argocd 
+        run: kubectl apply -f application.yml
+        
