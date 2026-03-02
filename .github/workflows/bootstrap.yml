@@ -9,6 +9,9 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Login to EKS Cluster
+        run: aws eks update-kubeconfig --region ap-south-1 --name gitops-eks-cluster
       
       - name: Apply ArgoCD Application 
         working-directory: argocd 
