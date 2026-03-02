@@ -15,18 +15,12 @@ resource "helm_release" "argocd_image_updater" {
         }
       }
 
-      config = {
-        registries = [
-          {
-            name      = "ecr"
-            api_url   = "https://364478544576.dkr.ecr.ap-south-1.amazonaws.com"
-            prefix    = "364478544576.dkr.ecr.ap-south-1.amazonaws.com"
-            ping      = true
-            insecure  = false
-            awsRegion = "ap-south-1"
-          }
-        ]
-      }
+      extraEnv = [
+        {
+          name  = "AWS_REGION"
+          value = "ap-south-1"
+        }
+      ]
     })
   ]
 
