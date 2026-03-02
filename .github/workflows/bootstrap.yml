@@ -6,9 +6,20 @@ on:
 jobs:
   argocd:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::364478544576:role/100DaysOfDevOps
+          aws-region: ap-south-1
+
 
       - name: Login to EKS Cluster
         run: aws eks update-kubeconfig --region ap-south-1 --name gitops-eks-cluster
