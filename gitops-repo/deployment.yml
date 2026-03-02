@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: argo-app
-          image: 364478544576.dkr.ecr.ap-south-1.amazonaws.com/argo-app:0fa3d5454634cb273da4ba1174a8980a21549b81
+          image: 364478544576.dkr.ecr.ap-south-1.amazonaws.com/argo-app:00366c98fd4795fb20d1098b5f9eedbf119c96cd
           ports:
             - containerPort: 5000
           # readinessProbe:
