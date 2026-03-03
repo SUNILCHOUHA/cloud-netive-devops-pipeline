@@ -13,11 +13,20 @@ spec:
       values: |
         config:
           logLevel: info
+
         extraArgs:
           - --interval=2m
+
+        serviceAccount:
+          create: true
+          name: argocd-image-updater
+          annotations:
+            eks.amazonaws.com/role-arn: arn:aws:iam::364478544576:role/argocd-image-updater-role
+
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
+
   syncPolicy:
     automated:
       prune: true
