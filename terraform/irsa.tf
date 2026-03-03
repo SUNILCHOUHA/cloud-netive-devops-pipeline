@@ -10,6 +10,7 @@ resource "aws_iam_policy" "argocd_image_updater_ecr_policy" {
         Action = [
           "ecr:GetAuthorizationToken",
           "ecr:BatchGetImage",
+          "ecr:BatchCheckLayerAvailability",
           "ecr:GetDownloadUrlForLayer",
           "ecr:DescribeRepositories",
           "ecr:ListImages",
@@ -30,20 +31,21 @@ resource "aws_iam_role" "argocd_image_updater_role" {
     Statement = [
       {
         Effect = "Allow"
+        Action = "sts:AssumeRoleWithWebIdentity"
+
         Principal = {
           Federated = aws_iam_openid_connect_provider.eks.arn
         }
-        Action = "sts:AssumeRoleWithWebIdentity"
+
         Condition = {
           StringEquals = {
-            "${replace(data.aws_eks_cluster.main.identity[0].oidc[0].issuer, "https://", "")}:sub" = "system:serviceaccount:argocd:argocd-image-updater"
+            "${replace(aws_iam_openid_connect_provider.eks.url, "https://", "")}:sub" = "system:serviceaccount:argocd:argocd-image-updater"
           }
         }
       }
     ]
   })
 }
-
 
 resource "aws_iam_role_policy_attachment" "argocd_image_updater_ecr_attach" {
   role       = aws_iam_role.argocd_image_updater_role.name
