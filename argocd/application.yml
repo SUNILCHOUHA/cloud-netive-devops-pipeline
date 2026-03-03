@@ -5,9 +5,10 @@ metadata:
   namespace: argocd
   annotations:
     argocd-image-updater.argoproj.io/image-list: argo-app=364478544576.dkr.ecr.ap-south-1.amazonaws.com/argo-app
-    argocd-image-updater.argoproj.io/update-strategy: newest-build
+    argocd-image-updater.argoproj.io/argo-app.update-strategy: newest-build    
     argocd-image-updater.argoproj.io/write-back-method: git
     argocd-image-updater.argoproj.io/git-branch: main
+    argocd-image-updater.argoproj.io/argo-app.pull-secret: argocd/ecr-registry
 
 spec:
   project: default
