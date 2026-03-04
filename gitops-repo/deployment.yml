@@ -16,15 +16,15 @@ spec:
     spec:
       containers:
         - name: argo-app
-          image: 364478544576.dkr.ecr.ap-south-1.amazonaws.com/argo-app:697e4d141b664de266e7077e7dd5f2208a92882e
+          image: 364478544576.dkr.ecr.ap-south-1.amazonaws.com/argo-app:latest
           ports:
             - containerPort: 5000
-          # readinessProbe:
-          #   httpGet:
-          #     path: /health
-          #     port: 5000
-          #   initialDelaySeconds: 5
-          #   periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
 
 
 
