@@ -31,7 +31,10 @@ resource "helm_release" "argocd_image_updater" {
     }
 
     config = {
-      logLevel = "debug"
+      "log.level" = "debug"
+
+      "argocd.server_addr" = "argocd-server.argocd.svc.cluster.local:443"
+      "argocd.grpc_web"    = true
 
       registries = [
         {
@@ -40,6 +43,7 @@ resource "helm_release" "argocd_image_updater" {
           api_url = "https://364478544576.dkr.ecr.ap-south-1.amazonaws.com"
           ping    = true
           default = true
+          credentials = "ext:/scripts/ecr-login.sh"
         }
       ]
     }

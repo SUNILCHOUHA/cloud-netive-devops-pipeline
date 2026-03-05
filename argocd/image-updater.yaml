@@ -1,33 +1,24 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+apiVersion: image.toolkit.fluxcd.io/v1beta2   # Note: FluxCD CRD install karna pad sakta hai (argo-image-updater supports)
+kind: ImageUpdateAutomation
 metadata:
-  name: argocd-image-updater
+  name: argo-app-updater
   namespace: argocd
 spec:
-  project: default
-  source:
-    repoURL: https://argoproj.github.io/argo-helm
-    chart: argocd-image-updater
-    targetRevision: 0.10.0
-    helm:
-      values: |
-        config:
-          logLevel: info
-
-        extraArgs:
-          - --interval=2m
-
-        serviceAccount:
-          create: true
-          name: argocd-image-updater
-          annotations:
-            eks.amazonaws.com/role-arn: arn:aws:iam::364478544576:role/argocd-image-updater-role
-
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: argocd
-
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+  interval: 2m
+  sourceRef:
+    kind: GitRepository
+    name: argo-app   # tera Application ka source
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        name: Sunil Chouhan
+        email: chouhansunilm@gmail.com
+      messageTemplate: "Update image {{range .Updated.Images}}{{.}}{{end}}"
+    push:
+      branch: main
+  update:
+    strategy: Setters
+    path: ./gitops-repo   # jahan manifests hain
