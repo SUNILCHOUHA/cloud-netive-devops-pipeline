@@ -1,3 +1,7 @@
+provider "aws" {
+  region = var.aws_region
+}
+
 terraform {
   required_version = ">= 1.3"
 
@@ -20,11 +24,10 @@ terraform {
 
 
   backend "s3" {
-    bucket         = "backend-eks-state-cicd"
+    bucket         = "gitops-bucket-7"
     key            = "terraform/terraform.tfstate"
     region         = "ap-south-1"
     use_lockfile = true
-    # dynamodb_table = "State-lock"
     encrypt        = true
   }
 }

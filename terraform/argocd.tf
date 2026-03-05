@@ -3,14 +3,15 @@ resource "helm_release" "argocd" {
   namespace        = "argocd"
   create_namespace = true
 
-  chart   = "oci://ghcr.io/argoproj/argo-helm/argo-cd"
-  version = "5.51.6"
+  repository = "https://argoproj.github.io/argo-helm"
+  chart   = "argo-cd"
+  version = "9.4.7"
 
   values = [
     yamlencode({
       server = {
         service = {
-          type = "LoadBalancer"
+          type = "ClusterIP"
         }
       }
     })
