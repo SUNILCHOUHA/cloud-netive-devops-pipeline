@@ -1,258 +1,163 @@
-🚀 Cloud-Native DevOps Pipeline on AWS (EKS + GitOps)
+🚀 Cloud-Native DevOps Pipeline
 
-A production-style Cloud-Native DevOps pipeline designed to demonstrate modern DevOps practices including Infrastructure as Code, containerized applications, CI automation, and GitOps-based Kubernetes deployments.
+A production-style Cloud-Native DevOps Pipeline demonstrating modern DevOps practices such as Infrastructure as Code, containerization, CI/CD automation, and GitOps-based Kubernetes deployments.
 
-This project implements a fully automated workflow where application builds, container image updates, and Kubernetes deployments happen automatically using industry-standard DevOps tools.
+This project simulates a real-world DevOps workflow where application updates are automatically built, pushed to a container registry, and deployed to Kubernetes using GitHub Actions, ArgoCD, and Terraform on AWS.
 
-The pipeline integrates Terraform, Docker, GitHub Actions, AWS ECR, Amazon EKS, ArgoCD, and ArgoCD Image Updater to create a scalable and automated cloud deployment system.
+📌 Project Goal
 
+The goal of this project is to implement a complete automated DevOps pipeline that includes:
 
-🎯 Project Objective
+Infrastructure provisioning
 
-The objective of this project is to build a real-world DevOps workflow that demonstrates:
-Infrastructure provisioning using Terraform
-Automated container image builds
-Secure container registry integration
-GitOps-based Kubernetes deployments
-Automated image update detection
-Continuous deployment to AWS EKS
-This setup reflects the modern DevOps architecture used in production cloud environments.
+Containerized application deployment
 
+CI/CD automation
 
-🏗️ Architecture Overview
-Developer
-   │
-   ▼
+GitOps-based Kubernetes delivery
+
+This repository demonstrates how modern cloud-native applications are deployed in production-like environments.
+
+🏗 DevOps Architecture
+Developer Push Code
+        │
+        ▼
 GitHub Repository
-   │
-   ▼
+        │
+        ▼
 GitHub Actions (CI Pipeline)
-   │
-   ▼
+        │
+        ▼
 Docker Image Build
-   │
-   ▼
-Amazon ECR (Container Registry)
-   │
-   ▼
+        │
+        ▼
+Push Image to AWS ECR
+        │
+        ▼
 ArgoCD Image Updater
-   │
-   ▼
-GitOps Repository Update
-   │
-   ▼
+        │
+        ▼
+Update GitOps Repository
+        │
+        ▼
 ArgoCD Sync
-   │
-   ▼
-Amazon EKS Cluster
-   │
-   ▼
-Kubernetes Deployment
-
-
-
-⚙️ Core Technologies Used
-☁️ Cloud Platform
-AWS EKS – Managed Kubernetes cluster
-Amazon ECR – Container image registry
-IAM + IRSA – Secure cloud authentication
-
-
-🏗 Infrastructure as Code
-Terraform
-
-
-📦 Containerization
-Docker
-
-
-⚡ Continuous Integration
-GitHub Actions
-
-
-☸️ Container Orchestration
-Kubernetes
-
-
-🔄 GitOps Deployment
-ArgoCD
-ArgoCD Image Updater
-
-
+        │
+        ▼
+Deployment to Kubernetes (EKS)
+⚙️ Technologies Used
+Category	Tools
+Cloud Platform	AWS
+Infrastructure as Code	Terraform
+Containerization	Docker
+Container Orchestration	Kubernetes
+CI/CD	GitHub Actions
+GitOps	ArgoCD
+Image Automation	ArgoCD Image Updater
+Version Control	Git & GitHub
+OS	Linux
 📂 Repository Structure
-cloud-netive-devops-pipeline
-
-app/
- ├── Dockerfile
- ├── requirements.txt
- └── application source code
-
-terraform/
- ├──backend/
- ├── image-updater.tf
- ├── argocd.tf
- ├── backend-state.tf
- ├── ecr.tf
- ├── eks.tf
- ├── noded.tf
- ├── output.tf
- ├── provider.tf
- ├── variable.tf
- └── vpc.tf
-
-argocd/
- └── application.yml
-
-gitops-repo/
- ├── deployment.yaml
- └── service.yaml
-
-.github/
- └── workflows/
-     ├── bootstrap.yml
-     ├── image-B&P.yml
-     └── infra.yml
-     
-
-This structure separates application code, infrastructure configuration, and deployment manifests, following DevOps best practices.
-
-
-🔄 CI/CD Pipeline Workflow
+cloud-native-devops-pipeline
+│
+├── .github/workflows
+│
+├── app
+│
+├── argocd
+│
+├── gitops-repo
+│
+├── k8s-manifest
+│
+├── terraform
+│
+└── README.md
+🔄 CI/CD Workflow
 1️⃣ Code Commit
 
-Developers push application code to the GitHub repository.
+Developers push code changes to the GitHub repository.
 
-git push origin main
-2️⃣ Continuous Integration (GitHub Actions)
+2️⃣ Continuous Integration
 
-The CI pipeline automatically:
-Builds a Docker image
+GitHub Actions pipeline automatically:
+
+Builds the Docker image
+
 Tags the image
-Pushes the image to Amazon ECR
 
-Example workflow:
-Docker Build → Image Tag → Push to ECR
+Pushes the image to AWS Elastic Container Registry (ECR)
 
-3️⃣ Image Monitoring
-ArgoCD Image Updater continuously monitors the ECR repository.
+3️⃣ Image Update
 
-When a new image version is detected:
-The GitOps repository is updated
-A new commit is created with the updated image tag
+ArgoCD Image Updater detects the new container image and updates the deployment manifests in the GitOps repository.
 
 4️⃣ GitOps Deployment
 
-ArgoCD detects the change in the GitOps repository and automatically:
-Syncs the new manifests
-Deploys the updated application to the EKS cluster
-This enables fully automated continuous deployment.
+ArgoCD automatically syncs the updated manifests and deploys the application to Kubernetes (Amazon EKS).
 
-🔐 Secure AWS Access (IRSA)
-The project implements IAM Roles for Service Accounts (IRSA).
+☁️ Infrastructure Provisioning
 
+Infrastructure is provisioned using Terraform.
 
-This provides:
-Secure authentication to Amazon ECR
-No static AWS credentials stored in Kubernetes
-Role-based access control for workloads
+Resources include:
 
-This is considered a production-grade security practice for Kubernetes workloads on AWS.
+AWS VPC
 
+Public and Private Subnets
 
-📦 Automated Image Updates
-Deployment manifests include annotations used by ArgoCD Image Updater.
+Internet Gateway
 
-Example configuration:
-annotations:
-  argocd-image-updater.argoproj.io/image-list: argo-app=<ECR_REPO>
-  argocd-image-updater.argoproj.io/update-strategy: newest-build
-  argocd-image-updater.argoproj.io/write-back-method: git
+Security Groups
 
-These annotations allow automatic detection and deployment of new container images.
+IAM Roles
 
+Amazon EKS Cluster
 
-🛠 Infrastructure Provisioning
+Worker Nodes
 
-Initialize Terraform:
+This ensures the infrastructure is fully reproducible and version-controlled.
+
+🚀 How to Run the Project
+Clone the repository
+git clone https://github.com/SUNILCHOUHA/cloud-netive-devops-pipeline.git
+cd cloud-netive-devops-pipeline
+Provision infrastructure
+cd terraform
 terraform init
-
-Deploy infrastructure:
 terraform apply
+Configure Kubernetes
+aws eks update-kubeconfig --region <region> --name <cluster-name>
+Deploy Kubernetes manifests
+kubectl apply -f k8s-manifest/
+📊 DevOps Concepts Demonstrated
 
-Terraform provisions:
-VPC networking
-Amazon EKS cluster
-Node groups
-Amazon ECR repository
-IAM roles
-ArgoCD installation
-ArgoCD Image Updater
+This project demonstrates several core DevOps practices:
 
+Infrastructure as Code (Terraform)
 
-☸️ Application Deployment
+CI/CD automation with GitHub Actions
 
-Apply the ArgoCD application:
-kubectl apply -f argocd/application.yml
+Containerized applications with Docker
 
-ArgoCD automatically syncs the Kubernetes manifests from the GitOps repository.
+Kubernetes-based deployments
 
+GitOps workflows using ArgoCD
 
-📊 Verify Deployment
-
-Check ArgoCD applications:
-kubectl get applications -n argocd
-
-Check Kubernetes workloads:
-kubectl get pods
-
-
-
-🖥 Access ArgoCD Dashboard
-
-Port forward the ArgoCD service:
-kubectl port-forward svc/argocd-server -n argocd 8080:443
-
-Retrieve admin password:
-kubectl get secret argocd-initial-admin-secret \
--n argocd \
--o jsonpath="{.data.password}" | base64 -d
-
-Open the dashboard:
-http://localhost:8080
-
-
-📈 DevOps Concepts Demonstrated
-
-This project demonstrates several important DevOps practices:
-Infrastructure as Code
-Containerized application deployment
-Kubernetes orchestration
-CI pipeline automation
-GitOps-based continuous delivery
 Automated container image updates
-Secure cloud authentication with IRSA
 
+Cloud-native infrastructure design
 
-🔮 Future Improvements
-Potential enhancements include:
-Helm-based deployments
-Multi-environment GitOps workflows
-Observability stack (Prometheus + Grafana)
-Canary deployments with Argo Rollouts
-Kubernetes security scanning
+👨‍💻 Author
 
-⭐ Project Highlights
-✔ Fully automated GitOps deployment pipeline
-✔ Infrastructure provisioned using Terraform
-✔ CI automation using GitHub Actions
-✔ Secure container registry integration with Amazon ECR
-✔ Automated Kubernetes deployments using ArgoCD
-✔ Dynamic container image updates with ArgoCD Image Updater
+Sunil Chouhan
 
-## 👤 Author  
-**Sunil Chouhan**   
-Aspiring DevOps Engineer   
-GitHub: https://github.com/SUNILCHOUHA   
-LinkedIn: https://www.linkedin.com/in/sunil-chouhan-07a45b36b/
+Aspiring DevOps Engineer focused on building cloud-native infrastructure and automated deployment pipelines.
 
-If you found this project useful or interesting, feel free to ⭐ the repository.
+GitHub
+https://github.com/SUNILCHOUHA
+
+LinkedIn
+https://www.linkedin.com/in/sunil-chouhan-07a45b36b/
+
+⭐ Support
+
+If you found this project useful, consider giving it a star ⭐ on GitHub.
