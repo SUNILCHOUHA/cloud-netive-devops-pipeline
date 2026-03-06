@@ -1,163 +1,109 @@
-🚀 Cloud-Native DevOps Pipeline
+# 🚀 Cloud-Native DevOps Pipeline (AWS • Terraform • Kubernetes • GitOps)
+This project demonstrates a production-style **Cloud-Native DevOps pipeline** designed to automate the complete lifecycle of an application — from infrastructure provisioning to automated deployment on Kubernetes.
 
-A production-style Cloud-Native DevOps Pipeline demonstrating modern DevOps practices such as Infrastructure as Code, containerization, CI/CD automation, and GitOps-based Kubernetes deployments.
+The pipeline integrates **Infrastructure as Code (Terraform)**, **CI/CD automation (GitHub Actions)**, **containerization (Docker)**, and **GitOps-based deployment (ArgoCD)** running on **Amazon EKS**.
 
-This project simulates a real-world DevOps workflow where application updates are automatically built, pushed to a container registry, and deployed to Kubernetes using GitHub Actions, ArgoCD, and Terraform on AWS.
+## 📌 Project Overview
 
-📌 Project Goal
+Modern applications require automated infrastructure, reliable CI/CD, and scalable orchestration. This repository simulates a realistic DevOps workflow:
 
-The goal of this project is to implement a complete automated DevOps pipeline that includes:
+*   **Infrastructure:** Provisioned using Terraform (IaC).
+*   **CI Pipeline:** GitHub Actions builds and pushes Docker images to Amazon ECR.
+*   **Image Automation:** ArgoCD Image Updater detects new versions automatically.
+*   **GitOps:** ArgoCD ensures the EKS cluster state matches the Git repository.
 
-Infrastructure provisioning
+---
 
-Containerized application deployment
+## 🏗️ System Architecture
 
-CI/CD automation
+### Architecture Flow
+1.  **Developer Push:** Code is committed to the GitHub App Repository.
+2.  **Continuous Integration (CI):** GitHub Actions builds, tags, and pushes the image to **Amazon ECR**.
+3.  **Image Detection:** **ArgoCD Image Updater** monitors the registry for new tags.
+4.  **GitOps Update:** The GitOps repository is automatically updated with the new image version.
+5.  **Continuous Deployment (CD):** **ArgoCD** synchronizes the **Amazon EKS** cluster with the new manifests.
+6.  **Deployment:** The application goes live on Kubernetes.
 
-GitOps-based Kubernetes delivery
+---
 
-This repository demonstrates how modern cloud-native applications are deployed in production-like environments.
+## ⚙️ Technology Stack
 
-🏗 DevOps Architecture
-Developer Push Code
-        │
-        ▼
-GitHub Repository
-        │
-        ▼
-GitHub Actions (CI Pipeline)
-        │
-        ▼
-Docker Image Build
-        │
-        ▼
-Push Image to AWS ECR
-        │
-        ▼
-ArgoCD Image Updater
-        │
-        ▼
-Update GitOps Repository
-        │
-        ▼
-ArgoCD Sync
-        │
-        ▼
-Deployment to Kubernetes (EKS)
-⚙️ Technologies Used
-Category	Tools
-Cloud Platform	AWS
-Infrastructure as Code	Terraform
-Containerization	Docker
-Container Orchestration	Kubernetes
-CI/CD	GitHub Actions
-GitOps	ArgoCD
-Image Automation	ArgoCD Image Updater
-Version Control	Git & GitHub
-OS	Linux
-📂 Repository Structure
+
+| Category | Technologies |
+| :--- | :--- |
+| **Cloud Platform** | AWS (EKS, ECR, VPC, IAM) |
+| **Infrastructure as Code** | Terraform |
+| **Containerization** | Docker |
+| **Orchestration** | Kubernetes |
+| **CI/CD Automation** | GitHub Actions |
+| **GitOps Deployment** | ArgoCD & ArgoCD Image Updater |
+
+---
+
+## 📂 Repository Structure
+
+```text
 cloud-native-devops-pipeline
 │
-├── .github/workflows
-│
-├── app
-│
-├── argocd
-│
-├── gitops-repo
-│
-├── k8s-manifest
-│
-├── terraform
-│
+├── .github/workflows   # CI/CD pipeline definitions
+├── app                 # Application source code and Dockerfile
+├── argocd              # ArgoCD application configuration
+├── gitops-repo         # GitOps managed deployment manifests
+├── k8s-manifest        # Kubernetes deployment YAML files
+├── terraform           # Infrastructure provisioning (VPC, EKS)
 └── README.md
-🔄 CI/CD Workflow
-1️⃣ Code Commit
+Use code with caution.
 
-Developers push code changes to the GitHub repository.
 
-2️⃣ Continuous Integration
-
-GitHub Actions pipeline automatically:
-
-Builds the Docker image
-
-Tags the image
-
-Pushes the image to AWS Elastic Container Registry (ECR)
-
-3️⃣ Image Update
-
-ArgoCD Image Updater detects the new container image and updates the deployment manifests in the GitOps repository.
-
-4️⃣ GitOps Deployment
-
-ArgoCD automatically syncs the updated manifests and deploys the application to Kubernetes (Amazon EKS).
-
-☁️ Infrastructure Provisioning
-
-Infrastructure is provisioned using Terraform.
-
-Resources include:
-
-AWS VPC
-
-Public and Private Subnets
-
-Internet Gateway
-
-Security Groups
-
-IAM Roles
-
-Amazon EKS Cluster
-
-Worker Nodes
-
-This ensures the infrastructure is fully reproducible and version-controlled.
-
-🚀 How to Run the Project
-Clone the repository
+🚀 Getting Started
+1️⃣ Clone the Repository
+bash
 git clone https://github.com/SUNILCHOUHA/cloud-netive-devops-pipeline.git
 cd cloud-netive-devops-pipeline
-Provision infrastructure
+Use code with caution.
+
+
+2️⃣ Provision Infrastructure
+bash
 cd terraform
 terraform init
-terraform apply
-Configure Kubernetes
-aws eks update-kubeconfig --region <region> --name <cluster-name>
-Deploy Kubernetes manifests
-kubectl apply -f k8s-manifest/
+terraform apply --auto-approve
+Use code with caution.
+
+
+3️⃣ Configure Kubernetes Access
+bash
+aws eks update-kubeconfig --region <your-region> --name <cluster-name>
+Use code with caution.
+
+
+4️⃣ Install ArgoCD
+bash
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+Use code with caution.
+
+
 📊 DevOps Concepts Demonstrated
+Infrastructure as Code: Full environment reproducibility via Terraform.
+GitOps: Single source of truth for infrastructure and application state.
+Immutable Infrastructure: Deploying new container versions instead of patching.
+Automation: Zero manual intervention from code commit to production.
 
-This project demonstrates several core DevOps practices:
 
-Infrastructure as Code (Terraform)
+📈 Future Improvements
+Integrate Prometheus & Grafana for monitoring.
+Implement Helm Charts for templating.
+Add Trivy vulnerability scanning in the CI pipeline.
+Implement multi-environment (Dev/Staging/Prod) logic.
 
-CI/CD automation with GitHub Actions
-
-Containerized applications with Docker
-
-Kubernetes-based deployments
-
-GitOps workflows using ArgoCD
-
-Automated container image updates
-
-Cloud-native infrastructure design
 
 👨‍💻 Author
-
 Sunil Chouhan
+Aspiring DevOps Engineer
 
-Aspiring DevOps Engineer focused on building cloud-native infrastructure and automated deployment pipelines.
+⭐ If you found this project useful, consider starring the repository!
 
-GitHub
-https://github.com/SUNILCHOUHA
 
-LinkedIn
-https://www.linkedin.com/in/sunil-chouhan-07a45b36b/
 
-⭐ Support
 
-If you found this project useful, consider giving it a star ⭐ on GitHub.
