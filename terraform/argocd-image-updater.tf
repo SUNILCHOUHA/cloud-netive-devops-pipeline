@@ -8,47 +8,50 @@ resource "aws_iam_role_policy_attachment" "argocd_image_updater_attach" {
   policy_arn = aws_iam_policy.argocd_image_updater_ecr_policy.arn
 }
 
+
+
+
 resource "helm_release" "argocd_image_updater" {
-  name       = "argocd-image-updater"
-  namespace  = "argocd"
+  name      = "argocd-image-updater"
+  namespace = "argocd"
 
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argocd-image-updater"
   version    = "1.1.1"
 
-  force_update = true
-  recreate_pods = true
+  force_update    = true
+  recreate_pods   = true
   cleanup_on_fail = true
 
   values = [
-  yamlencode({
-    serviceAccount = {
-      create = true
-      name   = "argocd-image-updater"
-      annotations = {
-        "eks.amazonaws.com/role-arn" = aws_iam_role.argocd_image_updater_role.arn
-      }
-    }
-
-    config = {
-      "log.level" = "debug"
-
-      "argocd.server_addr" = "argocd-server.argocd.svc.cluster.local:443"
-      "argocd.grpc_web"    = true
-
-      registries = [
-        {
-          name    = "ecr"
-          prefix  = "364478544576.dkr.ecr.ap-south-1.amazonaws.com"
-          api_url = "https://364478544576.dkr.ecr.ap-south-1.amazonaws.com"
-          ping    = true
-          default = true
-          credentials = "ext:/scripts/ecr-login.sh"
+    yamlencode({
+      serviceAccount = {
+        create = true
+        name   = "argocd-image-updater"
+        annotations = {
+          "eks.amazonaws.com/role-arn" = aws_iam_role.argocd_image_updater_role.arn
         }
-      ]
-    }
-  })
-]
+      }
+
+      config = {
+        "log.level" = "debug"
+
+        "argocd.server_addr" = "argocd-server.argocd.svc.cluster.local:443"
+        "argocd.grpc_web"    = true
+
+        registries = [
+          {
+            name        = "ecr"
+            prefix      = "364478544576.dkr.ecr.ap-south-1.amazonaws.com"
+            api_url     = "https://364478544576.dkr.ecr.ap-south-1.amazonaws.com"
+            ping        = true
+            default     = true
+            credentials = "ext:/scripts/ecr-login.sh"
+          }
+        ]
+      }
+    })
+  ]
 
   depends_on = [
     helm_release.argocd,
@@ -56,12 +59,18 @@ resource "helm_release" "argocd_image_updater" {
   ]
 }
 
+
+
+
 resource "aws_iam_policy" "argocd_image_updater_ecr_policy" {
   name        = "argocd-image-updater-ecr-policy"
   description = "Allow ArgoCD Image Updater to read ECR images"
 
   policy = data.aws_iam_policy_document.argocd_image_updater_ecr.json
 }
+
+
+
 
 
 data "aws_iam_policy_document" "argocd_image_updater_ecr" {
@@ -81,6 +90,10 @@ data "aws_iam_policy_document" "argocd_image_updater_ecr" {
     resources = ["*"]
   }
 }
+
+
+
+
 
 data "aws_iam_policy_document" "argocd_image_updater_assume_role" {
   statement {
