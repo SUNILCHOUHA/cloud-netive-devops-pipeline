@@ -1,0 +1,17 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: slack-alert
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 30s
+  repeat_interval: 1m
+
+
+receivers:
+- name: slack-alert
+  slack_configs:
+  - api_url: 'WebHook_URL'
+    channel: '#all-devops'
+    send_resolved: true

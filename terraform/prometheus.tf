@@ -5,5 +5,21 @@ resource "helm_release" "prometheus_stack" {
   repository = "https://prometheus-community.github.io/helm-charts"
   chart      = "kube-prometheus-stack"
 
-  create_namespace = false
+  values = [
+    file("${path.module}/monitoring-values/prometheus-values.yaml")
+  ]
+}
+
+
+resource "kubernetes_secret" "alertmanager_config" {
+  metadata {
+    name      = "alertmanager-custom-config"
+    namespace = "monitoring"
+  }
+
+  data = {
+    "alertmanager.yaml" = file("${path.module}/monitoring-values/alertmanager.yaml")
+  }
+
+  type = "Opaque"
 }

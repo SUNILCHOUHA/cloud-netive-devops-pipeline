@@ -1,6 +1,5 @@
 grafana:
   enabled: true
-
   adminUser: admin
   adminPassword: admin123
 
@@ -10,3 +9,9 @@ grafana:
 prometheus:
   prometheusSpec:
     retention: 7d
+
+alertmanager:
+  enabled: true
+
+  alertmanagerSpec:
+    configSecret: alertmanager-custom-config
