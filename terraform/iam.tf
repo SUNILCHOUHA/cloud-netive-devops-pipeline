@@ -1,5 +1,4 @@
 data "aws_caller_identity" "current" {}
-
 resource "aws_iam_role" "image_updater" {
   name = "argocd-image-updater-role"
 
@@ -33,9 +32,21 @@ resource "aws_iam_role_policy" "image_updater_policy" {
         "ecr:BatchGetImage",
         "ecr:DescribeImages",
         "ecr:ListImages",
-        "ecr:GetDownloadUrlForLayer"
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:ListImages" 
       ],
       Resource = "*"
     }]
   })
+}
+
+resource "kubernetes_service_account" "image_updater" {
+  metadata {
+    name      = "argocd-image-updater"
+    namespace = "argocd"
+
+    annotations = {
+      "eks.amazonaws.com/role-arn" = aws_iam_role.image_updater.arn
+    }
+  }
 }
