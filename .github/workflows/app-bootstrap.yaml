@@ -33,13 +33,16 @@ jobs:
         working-directory: argocd 
         run: kubectl apply -f application.yaml
 
-      - name: Verify Monitoring 
-        run: kubectl get pods -n monitoring
-
       - name: Wait for Monitoring
         run: |
           kubectl wait --for=condition=available deployment/prometheus-grafana -n monitoring --timeout=120s
 
+      - name: Verify Monitoring 
+        run: kubectl get pods -n monitoring
+
+      - name: Verify Monitoring Services 
+        run: kubeclt get svc -n monitoring
+        
       - name: Apply  Monitoring Rules
         working-directory: argocd
         run: kubectl apply -f monitoring-app.yaml
