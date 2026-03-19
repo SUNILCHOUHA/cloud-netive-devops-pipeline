@@ -50,3 +50,4 @@ resource "kubernetes_service_account" "image_updater" {
     }
   }
 }
+
