@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  plan-apply:
+  infra-creation:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -23,13 +23,13 @@ jobs:
         uses: hashicorp/setup-terraform@v3 
       
       - name: Terraform Initialize
-        working-directory: terraform
+        working-directory: terraform/infra
         run: |
           terraform init
           terraform validate
                   
       - name: Terraform Plan
-        working-directory: terraform
+        working-directory: terraform/infra
         run: |
           terraform plan -out=tfplan
 
@@ -37,8 +37,58 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: tfplan
-          path: terraform/tfplan
+          path: terraform/infra/tfplan
 
       - name: Terraform Apply
-        working-directory: terraform
+        working-directory: terraform/infra
+        run: terraform apply -auto-approve tfplan
+
+
+  heml-install:
+    needs: infra-creation
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      
+    steps:
+      - name: Checkout Code 
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::364478544576:role/100DaysOfDevOps
+          aws-region: ap-south-1
+
+      - name: Terraform Setup
+        uses: hashicorp/setup-terraform@v3 
+
+      - name: Wait for EKS
+        run: |
+          aws eks wait cluster-active --name gitops-eks-cluster --region ap-south-1
+
+      - name: AWS EKS Login
+        run: |
+          aws eks update-kubeconfig --region ap-south-1 --name gitops-eks-cluster 
+      
+      - name: Terraform Initialize
+        working-directory: terraform/monitoring-stack
+        run: |
+          terraform init
+          terraform validate
+                  
+      - name: Terraform Plan
+        working-directory: terraform/monitoring-stack
+        run: |
+          terraform plan -out=tfplan
+
+      - name: Artifact Plan
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan
+          path: terraform/monitoring-stack/tfplan
+
+      - name: Terraform Apply
+        working-directory: terraform/monitoring-stack
         run: terraform apply -auto-approve tfplan
