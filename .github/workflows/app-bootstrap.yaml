@@ -32,11 +32,6 @@ jobs:
       - name: Verify ArgoCD Services
         run: kubectl get svc -n argocd 
 
-      - name: Get ArgoCD Password
-        run: |
-          kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
-
-      
       - name: Deploy app manifest
         working-directory: argocd 
         run: kubectl apply -f application.yaml

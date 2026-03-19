@@ -17,7 +17,7 @@ resource "helm_release" "argocd" {
 
       configs = {
         secret = {
-          argocdServerAdminPassword = "gitops123"
+          argocdServerAdminPassword = "$2y$10$1y4eQtkkKKxeIOiM5.WPRuWS08z.4YER30L.wGKw0P54tvbb10XMe"
 
         }
       }
