@@ -4,7 +4,6 @@ resource "helm_release" "image_updater" {
 
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argocd-image-updater"
-
    values = [
     <<EOF
 config:

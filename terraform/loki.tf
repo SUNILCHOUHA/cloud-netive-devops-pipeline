@@ -16,3 +16,4 @@ resource "helm_release" "loki" {
     helm_release.prometheus_stack
   ]
 }
+

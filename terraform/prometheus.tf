@@ -10,7 +10,6 @@ resource "helm_release" "prometheus_stack" {
   ]
 }
 
-
 resource "kubernetes_secret" "alertmanager_config" {
   metadata {
     name      = "alertmanager-custom-config"
