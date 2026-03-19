@@ -41,4 +41,5 @@ jobs:
           kubectl wait --for=condition=available deployment/prometheus-grafana -n monitoring --timeout=120s
 
       - name: Apply  Monitoring Rules
+        working-directory: argocd
         run: kubectl apply -f monitoring-app.yaml
