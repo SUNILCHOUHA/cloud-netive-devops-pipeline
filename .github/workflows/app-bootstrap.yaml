@@ -44,7 +44,7 @@ jobs:
         run: kubectl get pods -n monitoring
 
       - name: Verify Monitoring Services 
-        run: kubeclt get svc -n monitoring
+        run: kubectl get svc -n monitoring
 
       - name: Apply  Monitoring Rules
         working-directory: argocd
