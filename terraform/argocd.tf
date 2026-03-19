@@ -11,7 +11,14 @@ resource "helm_release" "argocd" {
     yamlencode({
       server = {
         service = {
-          type = "ClusterIP"
+          type = "LoadBalancer"
+        }
+      }
+
+      configs = {
+        secret = {
+          argocdServerAdminPassword = "gitops123"
+
         }
       }
     })

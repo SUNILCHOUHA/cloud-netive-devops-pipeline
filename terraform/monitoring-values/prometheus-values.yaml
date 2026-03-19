@@ -1,12 +1,17 @@
 grafana:
   enabled: true
-
   adminUser: admin
-  adminPassword: admin123
+  adminPassword: gitops123
 
   service:
-    type: ClusterIP
+    type: LoadBalancer
 
 prometheus:
   prometheusSpec:
     retention: 7d
+
+alertmanager:
+  enabled: true
+
+  alertmanagerSpec:
+    configSecret: alertmanager-custom-config

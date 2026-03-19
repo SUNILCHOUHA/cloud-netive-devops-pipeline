@@ -21,8 +21,24 @@ jobs:
 
       - name: Login to EKS Cluster
         run: aws eks update-kubeconfig --region ap-south-1 --name gitops-eks-cluster
-      
-      - name: Apply ArgoCD Application 
-        working-directory: argocd 
-        run: kubectl apply -f application.yml
 
+      - name: Verify ArgoCD
+        run: kubectl get pods -n argocd 
+
+      - name: Wait for ArgoCD
+        run: |
+          kubectl wait --for=condition=available deployment/argocd-server -n argocd --timeout=120s
+      
+      - name: Deploy app manifest
+        working-directory: argocd 
+        run: kubectl apply -f application.yaml
+
+      - name: Verify Monitoring 
+        run: kubectl get pods -n monitoring
+
+      - name: Wait for Monitoring
+        run: |
+          kubectl wait --for=condition=available deployment/prometheus-grafana -n monitoring --timeout=120s
+
+      - name: Apply  Monitoring Rules
+        run: kubectl apply -f monitoring-app.yaml

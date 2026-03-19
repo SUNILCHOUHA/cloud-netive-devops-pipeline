@@ -45,8 +45,8 @@ resource "aws_eks_node_group" "nodes" {
   ]
 
   scaling_config {
-    desired_size = 2
-    max_size     = 2
+    desired_size = 5
+    max_size     = 7
     min_size     = 1
   }
 
@@ -65,8 +65,8 @@ resource "aws_eks_node_group" "nodes" {
 
 
 
-resource "aws_iam_openid_connect_provider" "eks_connect" {
-  client_id_list  = ["sts.amazonaws.com"]
-  thumbprint_list = [data.tls_certificate.eks_certificate.certificates[0].sha1_fingerprint]
-  url             = aws_eks_cluster.eks.identity[0].oidc[0].issuer
-}
+# resource "aws_iam_openid_connect_provider" "eks_connect" {
+#   client_id_list  = ["sts.amazonaws.com"]
+#   thumbprint_list = [data.tls_certificate.eks_certificate.certificates[0].sha1_fingerprint]
+#   url             = aws_eks_cluster.eks.identity[0].oidc[0].issuer
+# }
