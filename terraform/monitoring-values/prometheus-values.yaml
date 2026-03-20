@@ -12,6 +12,11 @@ prometheus:
 
 alertmanager:
   enabled: true
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 43f02a3f3aa5a4f5c694981f89ba44eb8a754792
   alertmanagerSpec:
     useExistingSecret: true
     configSecret: alertmanager-custom-config
