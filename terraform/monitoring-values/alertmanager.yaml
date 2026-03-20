@@ -12,6 +12,6 @@ route:
 receivers:
 - name: slack-alert
   slack_configs:
-  - api_url: 'WebHook_URL'
+  - api_url: 'a022d97deba564ba5b84bd3e6d38cdbba5c0306f'
     channel: '#all-devops'
     send_resolved: true
