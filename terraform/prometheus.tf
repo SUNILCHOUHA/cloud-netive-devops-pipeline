@@ -1,3 +1,18 @@
+resource "kubernetes_secret" "alertmanager_config" {
+  metadata {
+    name      = "alertmanager-custom-config"
+    namespace = "monitoring"
+  }
+
+  data = {
+    "alertmanager.yaml" = templatefile("${path.module}/monitoring-values/alertmanager.yaml", {
+      webhook_url = var.slack_webhook_url
+    })
+  }
+
+  type = "Opaque"
+}
+
 resource "helm_release" "prometheus_stack" {
   name       = "prometheus"
   namespace  = "monitoring"
@@ -8,17 +23,8 @@ resource "helm_release" "prometheus_stack" {
   values = [
     file("${path.module}/monitoring-values/prometheus-values.yaml")
   ]
-}
 
-resource "kubernetes_secret" "alertmanager_config" {
-  metadata {
-    name      = "alertmanager-custom-config"
-    namespace = "monitoring"
-  }
-
-  data = {
-    "alertmanager.yaml" = file("${path.module}/monitoring-values/alertmanager.yaml")
-  }
-
-  type = "Opaque"
+  depends_on = [
+    kubernetes_secret.alertmanager_config
+  ]
 }

@@ -10,3 +10,8 @@ variable "repository_name" {
   default = "argo-app"
 }
 
+variable "slack_webhook_url" {
+  type = string
+  sensitive = true
+
+}

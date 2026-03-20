@@ -10,13 +10,8 @@ prometheus:
   prometheusSpec:
     retention: 7d
 
-  service:
-    type: LoadBalancer
-
 alertmanager:
   enabled: true
-  service:
-    type: LoadBalancer
-
   alertmanagerSpec:
+    useExistingSecret: true
     configSecret: alertmanager-custom-config
