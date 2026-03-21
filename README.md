@@ -67,8 +67,6 @@ This project follows the architecture below:
 
 ## Architecture Diagram
 
-Add your architecture image here.
-
 ![Architecture Diagram](docs/architecture/architecture-diagram.png)
 
 
@@ -228,7 +226,6 @@ This provides a real incident flow:
 
 ### Folder Details
 
-
 #### `.github/workflows/`
 Contains GitHub Actions workflows responsible for:
 
@@ -305,6 +302,7 @@ The Terraform configuration provisions and manages the main infrastructure requi
 
 This ensures the infrastructure is reproducible, version-controlled, and easier to manage.
 
+
 ## CI/CD Workflow
 
 The CI/CD layer is implemented using GitHub Actions.
@@ -322,6 +320,7 @@ The CI/CD layer is implemented using GitHub Actions.
 - easy integration with GitHub-based source changes
 - better visibility into build and infrastructure execution
 
+
 ## GitOps Workflow
 
 The GitOps layer is implemented using ArgoCD.
@@ -334,7 +333,6 @@ GitOps ensures that:
 - deployments are declarative
 - cluster drift can be detected and corrected
 - application sync status is visible
-
 
 ### In this project
 
@@ -450,6 +448,7 @@ These dashboards help provide a quick operational summary of system health.
 ## Screenshots / Proof
 
 ### GitHub Actions
+
 ![GitHub Actions](docs/screenshots/github-actions.png)
 
 ### ArgoCD
@@ -493,8 +492,8 @@ Apply the ArgoCD application manifests and verify sync status.
 
 
 ### 6. Verify deployment
-Check:
 
+Check:
 - Kubernetes resources
 - ArgoCD app health
 - Prometheus targets and alerts
@@ -553,9 +552,10 @@ Built an end-to-end Cloud Native DevOps Pipeline on AWS EKS using GitHub Actions
 This project demonstrates how modern DevOps practices can be integrated into one practical workflow. It goes beyond isolated tool usage by combining automation, infrastructure, deployment, observability, and notification systems into a single cloud-native pipeline.
 
 The most valuable outcome of this project was not just building the stack, but understanding how the components interact, how failures surface, and how a real production-style workflow can be observed and debugged end to end.
-
+---
 
 ## Author
 
 **Sunil chouhan**  
 DevOps Learner | Aspiring DevOps Engineer
+
