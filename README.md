@@ -67,12 +67,9 @@ This project follows the architecture below:
 
 ## Architecture Diagram
 
-Add your architecture image here.
-
 ```md
 ![Architecture Diagram](docs/architecture/architecture-diagram.png)
 
-If your file name is different, replace the path accordingly.
 
 
 
@@ -305,8 +302,8 @@ ArgoCD-related setup for GitOps workflows
 
 This ensures the infrastructure is reproducible, version-controlled, and easier to manage.
 
-CI/CD Workflow
 
+CI/CD Workflow
 The CI/CD layer is implemented using GitHub Actions.
 
 Main responsibilities
@@ -326,15 +323,15 @@ The GitOps layer is implemented using ArgoCD.
 
 
 Why GitOps?
-
 GitOps ensures that:
 
 Git remains the source of truth
 deployments are declarative
 cluster drift can be detected and corrected
 application sync status is visible
-In this project
 
+
+In this project
 ArgoCD watches the Git repository and syncs the manifests into the EKS cluster. The application status can be observed as:
 
 Healthy
@@ -454,7 +451,6 @@ Alertmanager grouped alerts
 Grafana dashboard
 Slack notification delivery
 
-Example markdown:
 
 ## GitHub Actions
 ![GitHub Actions](docs/screenshots/github-actions.png)
