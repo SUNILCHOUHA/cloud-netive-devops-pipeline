@@ -21,7 +21,7 @@ resource "helm_release" "prometheus_stack" {
   chart      = "kube-prometheus-stack"
 
   values = [
-    file("${path.module}/monitoring-values/prometheus-values.yaml")
+    file("${path.module}/helm-values/prometheus-values.yaml")
   ]
 
   depends_on = [

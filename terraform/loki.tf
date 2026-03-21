@@ -9,7 +9,7 @@ resource "helm_release" "loki" {
   wait    = true
 
   values = [
-    file("${path.module}/monitoring-values/loki-values.yaml")
+    file("${path.module}/helm-values/loki-values.yaml")
   ]
 
   depends_on = [
